@@ -1,4 +1,3 @@
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initWelcomeScreen();
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMessages();
 });
 
-// Theme Setup
 function initTheme() {
     if (config.themeColor) {
         document.documentElement.style.setProperty('--primary-color', config.themeColor);
@@ -17,7 +15,6 @@ function initTheme() {
     document.getElementById('couple-names').textContent = config.meandyou;
 }
 
-// Welcome Screen Logic
 function initWelcomeScreen() {
     const enterBtn = document.getElementById('enter-btn');
     const welcomeScreen = document.getElementById('welcome-screen');
@@ -25,14 +22,9 @@ function initWelcomeScreen() {
     const bgMusic = document.getElementById('bg-music');
 
     enterBtn.addEventListener('click', () => {
-        // Play Music
-        if (config.musicUrl) {
-            bgMusic.src = config.musicUrl;
-            bgMusic.play().catch(e => console.log("Audio play failed:", e));
-            document.getElementById('music-btn').classList.add('playing');
-        }
+        bgMusic.play().catch(e => console.log("Audio play failed:", e));
+        document.getElementById('music-btn').classList.add('playing');
 
-        // Hide Welcome / Show Main
         welcomeScreen.style.opacity = '0';
         setTimeout(() => {
             welcomeScreen.style.display = 'none';
@@ -42,28 +34,79 @@ function initWelcomeScreen() {
     });
 }
 
-// Music Control
 function initMusic() {
     const musicBtn = document.getElementById('music-btn');
     const bgMusic = document.getElementById('bg-music');
     const volumeSlider = document.getElementById('volume-slider');
-    let isPlaying = true;
+    
+    const wrapper = document.querySelector('.custom-select-wrapper');
+    const trigger = document.getElementById('music-trigger');
+    const triggerText = document.getElementById('current-song-name');
+    const optionsContainer = document.getElementById('music-options');
+    
+    let isPlaying = false;
 
-    // Set initial volume
+    if (config.musicList && config.musicList.length > 0) {
+        bgMusic.src = config.musicList[0].url;
+        triggerText.textContent = config.musicList[0].title;
+
+        config.musicList.forEach((song, index) => {
+            const item = document.createElement('div');
+            item.className = 'option-item';
+            if (index === 0) item.classList.add('selected');
+            item.textContent = song.title;
+            item.dataset.url = song.url;
+
+            item.addEventListener('click', () => {
+                bgMusic.src = song.url;
+                triggerText.textContent = song.title;
+                
+                document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+                item.classList.add('selected');
+
+                wrapper.classList.remove('open');
+
+                if (isPlaying || musicBtn.classList.contains('playing')) {
+                    bgMusic.play();
+                    isPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+                } else {
+                    musicBtn.classList.remove('playing');
+                    musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            });
+
+            optionsContainer.appendChild(item);
+        });
+    }
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        wrapper.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target)) {
+            wrapper.classList.remove('open');
+        }
+    });
+
     bgMusic.volume = config.musicVolume || 0.5;
     volumeSlider.value = bgMusic.volume;
 
     musicBtn.addEventListener('click', () => {
-        if (isPlaying) {
+        if (!bgMusic.paused) {
             bgMusic.pause();
             musicBtn.classList.remove('playing');
             musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+            isPlaying = false;
         } else {
             bgMusic.play();
             musicBtn.classList.add('playing');
             musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+            isPlaying = true;
         }
-        isPlaying = !isPlaying;
     });
 
     volumeSlider.addEventListener('input', (e) => {
@@ -71,7 +114,6 @@ function initMusic() {
     });
 }
 
-// Timer Logic
 function initTimer() {
     const startDate = new Date(config.anniversaryDate);
 
@@ -94,7 +136,6 @@ function initTimer() {
     updateTimer();
 }
 
-// Render Gallery
 function renderGallery() {
     const galleryGrid = document.getElementById('gallery-grid');
     galleryImages.forEach(url => {
@@ -105,7 +146,6 @@ function renderGallery() {
     });
 }
 
-// Render Timeline
 function renderTimeline() {
     const timeline = document.getElementById('timeline');
     timelineEvents.forEach((event, index) => {
@@ -123,7 +163,6 @@ function renderTimeline() {
     });
 }
 
-// Render Messages
 function renderMessages() {
     const container = document.getElementById('cards-container');
     messages.forEach(msg => {

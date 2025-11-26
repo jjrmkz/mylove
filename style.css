@@ -423,3 +423,112 @@ footer i {
         font-size: 1.8rem;
     }
 }
+/* Custom Select Styling */
+.custom-select-wrapper {
+    position: relative;
+    font-family: var(--font-secondary);
+    margin-right: 10px;
+    z-index: 101; /* ต้องมากกว่า music-control ปกติ */
+}
+
+/* ตัวปุ่มกดเลือก (Trigger) */
+.select-trigger {
+    background: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 140px;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.select-trigger:hover {
+    background: #fff0f1; /* สีชมพูอ่อนมากๆ ตอนชี้ */
+    transform: translateY(-1px);
+}
+
+.select-trigger span {
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+.select-trigger .arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+/* หมุนลูกศรเมื่อเปิด */
+.custom-select-wrapper.open .arrow {
+    transform: rotate(180deg);
+}
+
+/* กล่องตัวเลือก (Options Container) */
+.select-options {
+    position: absolute;
+    bottom: 120%; /* ให้ลอยขึ้นไปด้านบน */
+    left: 0;
+    width: 100%; /* กว้างเท่าตัวแม่ */
+    min-width: 160px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: 1px solid #ffd1d4;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    max-height: 200px; /* ถ้าเพลงเยอะเกิน จะมี Scrollbar */
+    overflow-y: auto;
+}
+
+/* Scrollbar สวยๆ */
+.select-options::-webkit-scrollbar {
+    width: 6px;
+}
+.select-options::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+}
+
+/* สถานะเปิด Dropdown */
+.custom-select-wrapper.open .select-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ตัวเลือกแต่ละอัน (Option Item) */
+.option-item {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid #fcfcfc;
+}
+
+.option-item:last-child {
+    border-bottom: none;
+}
+
+.option-item:hover {
+    background-color: var(--primary-color);
+    color: white; /* เปลี่ยนตัวหนังสือเป็นขาวตอนชี้ */
+}
+
+.option-item.selected {
+    background-color: #fff0f1;
+    color: var(--primary-color);
+    font-weight: bold;
+}
