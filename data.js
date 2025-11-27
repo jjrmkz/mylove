@@ -3,13 +3,14 @@ const config = {
     anniversaryDate: new Date(2025, 10, 16),
     themeColor: "#ff9a9e",
     musicList: [
-        { title: "Day 1", url: "/misc//music/คลั่งเธอ.mp3" },
-        { title: "Day 2", url: "/misc//music/รถเต่าคันเก่าหลังบ้าน.mp3" },
-        { title: "Day 3", url: "/misc//music/flashlight.mp3" },
-        { title: "Day 4", url: "/misc//music/นับหนึ่ง.mp3" },
-        { title: "Day 5", url: "/misc//music/daisies.mp3" },
-        { title: "Day 6", url: "/misc//music/peaches.mp3" },
-        { title: "Day 7", url: "/misc//music/อีกแล้ว.mp3" },
+        { title: "Day 1", url: "/misc/music/คลั่งเธอ.mp3" },
+        { title: "Day 2", url: "/misc/music/รถเต่าคันเก่าหลังบ้าน.mp3" },
+        { title: "Day 3", url: "/misc/music/flashlight.mp3" },
+        { title: "Day 4", url: "/misc/music/นับหนึ่ง.mp3" },
+        { title: "Day 5", url: "/misc/music/daisies.mp3" },
+        { title: "Day 6", url: "/misc/music/peaches.mp3" },
+        { title: "Day 7", url: "/misc/music/อีกแล้ว.mp3" },
+        { title: "Day 8", url: "/misc/music/surething.mp3" },
     ],
     musicVolume: 0.1
 };
