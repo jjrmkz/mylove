@@ -11,6 +11,7 @@ const config = {
         { title: "Day 6", url: "/misc/music/peaches.mp3" },
         { title: "Day 7", url: "/misc/music/อีกแล้ว.mp3" },
         { title: "Day 8", url: "/misc/music/surething.mp3" },
+        { title: "Day 9", url: "/misc/music/คนที่โชคดีกว่า.mp3" },
     ],
     musicVolume: 0.1
 };
